@@ -1,6 +1,0 @@
-program p2
-begin
-    z <- t[i] ;
-    t[i] <- t[j] ;
-    t[j] <- z
-end.
