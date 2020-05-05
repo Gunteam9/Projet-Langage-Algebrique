@@ -1,7 +1,0 @@
-program p5
-begin
-    r <- 1 ;
-    for i from 2 to n do
-        r <- r * i
-    end
-end.
