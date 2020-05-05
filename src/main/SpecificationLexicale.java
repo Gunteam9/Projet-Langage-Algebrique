@@ -63,7 +63,7 @@ public class SpecificationLexicale {
 
 
     /**
-     * Constructeur qui crée les deux automates
+     * Création des automates Entiers et Identificateurs
      */
     public SpecificationLexicale() {
         NoeudAutomate a1n1 = new NoeudAutomate(false,1);
@@ -105,30 +105,45 @@ public class SpecificationLexicale {
 
     }
 
+
+    /**
+     * 
+     * @return L'automate Entiers
+     */
     public Automate getAutomateEntiers() {
         return automateEntiers;
     }
 
-
+    /**
+     * 
+     * @return L'automate Identificateurs
+     */
     public Automate getAutomateIdentificateurs() {
         return automateIdentificateurs;
     }
 
     /**
-     * Méthode qui remplace tous les identificateurs par le token ident et tous les entiers par le token entier (sauf les mots clés)
-     * @param algo1 est l'algo en entrée
-     * @return un string contenant algo1 avec les mots remplacés
+     * Lit le fichier donné en paramètre et remplace chaque mot par "ident" ou "entier". Conserve les autres mots clef (i.e. [ ou ])
+     * @param Le fichier à remplacer
+     * @return Une chaine de caractère avec les mots remplacés
      * @throws FileNotFoundException si le fichier n'existe pas
      */
     public String remplacer(File algo1) throws FileNotFoundException {
         Scanner scAlgo = new Scanner(algo1);
         StringBuilder remplacement = new StringBuilder();
         String ligne;
+        
+        //Pour chaque ligne
         while (scAlgo.hasNextLine()) {
             ligne = scAlgo.nextLine();
             ligne = this.separerCharSpeciaux(ligne);
             String[] mots = ligne.strip().split(" ");
+            
+            //Pour chaque mot (suite de caractère séparé par un espace)
             for (String mot : mots) {
+            	
+            	//Utilisation des automates
+            	
                 if (this.automateIdentificateurs.estValide(mot)) {
                     if (this.listMotCles.contains(mot)) { // si c'est un mot clé on le laisse tel quel
                         remplacement.append(" ").append(mot);
@@ -149,11 +164,11 @@ public class SpecificationLexicale {
     }
 
     /**
-     * Méthode qui sépare tous les caractères specieux afin de pouvoir traiter le string plus facilement
-     * @param s est le string
-     * @return le string dont les char spéciaux sont séparés
+     * Sépare tous les caractères spéciaux pour traiter le string plus facilement
+     * @param Le string à remplacer
+     * @return Le string avec les caracètres spéciaux séparés
      */
-    public String separerCharSpeciaux(String s){ // rajouter les bool
+    public String separerCharSpeciaux(String s){ //
         return s.replaceAll(";"," ; ")
                 .replaceAll("\\."," . ")
                 .replaceAll("\\+", " + ")
@@ -172,9 +187,9 @@ public class SpecificationLexicale {
     }
 
     /**
-     * Méthode qui enlève les espaces inutiles en trop
-     * @param s le string
-     * @return s sans les espaces inutiles
+     * Enlève les espaces inutiles en trop
+     * @param Le string à retravailler
+     * @return Le string sans espace
      */
     public String enleverEspaces(String s){
         return s.replaceAll("\\[ *", "[")
@@ -187,13 +202,5 @@ public class SpecificationLexicale {
                 .replaceAll(" *\\+ *","+")
                 .replaceAll(" *\\. *",".")
                 .replaceAll(" +<-"," <- ");
-
-                /* decommenter ça pour enlever les espaces apre_s les bool
-                .replaceAll(" *== *","==")
-                .replaceAll(" +< +","<")
-                .replaceAll(" +> +",">");
-                */
-
-
     }
 }

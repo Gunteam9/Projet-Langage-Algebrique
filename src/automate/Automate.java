@@ -4,18 +4,15 @@ import java.util.regex.Pattern;
 
 import org.javatuples.Triplet;
 
-/**
- * Classe d'automate
- */
 public class Automate {
-    private int nombreEtats;
-    private NoeudAutomate etatInitial;
+    private final int nombreEtats;
+    private final NoeudAutomate etatInitial;
     private NoeudAutomate[] etats;
 
     /**
-     * Crée un automate avec un nombre d'états définis
-     * @param nombreEtats est le nombre d'états
-     * @param etatInitial est l'état initial de l'automate
+     * Crée un automate avec un nombre d'états prédéfini
+     * @param nombreEtats - Le nombre d'états
+     * @param etatInitial - L'état initial
      */
     public Automate(int nombreEtats, NoeudAutomate etatInitial) {
         this.nombreEtats = nombreEtats;
@@ -24,18 +21,18 @@ public class Automate {
     }
 
     /**
-     * Méthode qui ajoute un noued à l'automate à un certain index, l'index n'a pas d'importance mais doit-être dans la longueur
-     * @param noeudAutomate est le noeud a rajouter
-     * @param index est l'index à r'ajouter le noeud
+     * Ajoute un noeud à l'automate à d'index donné
+     * @param noeudAutomate - Noeud a ajouter
+     * @param index - L'index du noeud
      */
     public void ajouterEtat(NoeudAutomate noeudAutomate, int index){
         this.etats[index] = noeudAutomate;
     }
 
     /**
-     * Méthode qui verifie si le mot passé en paramètres est accepté par l'automate
-     * @param mot est le mot a verifier
-     * @return true ou false
+     * Verifie si le mot passé en paramètres est accepté par l'automate
+     * @param mot - Le mot à vérifier
+     * @return true - Si le mot est accepté par l'automate, sinon false
      */
     public boolean estValide(String mot){
         NoeudAutomate noeudAutomateActuel = this.etatInitial ;
@@ -43,6 +40,7 @@ public class Automate {
         for (int i = 0; i < mot.length() ; i++) {
             Character currentLetter = mot.charAt(i);
 
+            //Si le mot contient autre chose que des lettres entre a-z ou 0-9 ou -
         	if (!Pattern.matches("[a-z]|[0-9]|-", currentLetter.toString()))
         		return false;
 
@@ -53,7 +51,16 @@ public class Automate {
         		noeudAutomateActuel = transition.getValue2();
         }
         
+        //Si le noeud est final à la fin du mot, alors il est accepté par l'automate
         return noeudAutomateActuel.estFinal();
+    }
+    
+    /**
+     * 
+     * @return Le nombre d'états de l'automate
+     */
+    public final int getNombreEtats() {
+    	return nombreEtats;
     }
 
 

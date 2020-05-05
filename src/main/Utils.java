@@ -1,5 +1,7 @@
 package main;
 
+//Variables utiles
+
 public class Utils {
 	
 	public static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";

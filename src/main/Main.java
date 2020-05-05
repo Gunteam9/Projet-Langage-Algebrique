@@ -1,6 +1,11 @@
 package main;
 import automate.Automate;
 
+/*
+ * 
+ * Guide d'utilisation: Voir dernière page du PDF
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 
